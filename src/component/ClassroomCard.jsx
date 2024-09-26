@@ -6,60 +6,89 @@ import {
 	Avatar,
 	Box,
 	Divider,
+	IconButton,
+	Tooltip,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import FolderOpenOutlinedIcon from "@mui/icons-material/FolderOpenOutlined";
-import { IconButton, Tooltip } from "@mui/material";
 import ContactsIcon from "@mui/icons-material/Contacts";
 
 // Custom styles
 const useStyles = makeStyles({
 	card: {
 		width: "100%",
-		height: "100%",
-		borderRadius: "12px", // Rounded corners
+		borderRadius: "8px", // Reduced for a subtle rounded look
 		boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", // Subtle shadow
-		overflow: "hidden", // Ensures rounded corners are applied
-		position: "relative", // Ensure proper absolute positioning for avatar
+		overflow: "hidden",
 	},
 	header: {
-		background: "linear-gradient(135deg, #43a047, #00796b)", // Gradient background
+		backgroundColor: "#black", // Light background
 		padding: "16px",
-		color: "white",
-		display: "flex",
-		justifyContent: "space-between",
-		alignItems: "center",
-		position: "relative",
-		height:"30"
+		color: "#000", // Darker text color
+		textAlign: "center", // Centered title
 	},
 	avatar: {
 		backgroundColor: "#A1887F",
 		color: "white",
-		width: 55, // Increased size for visibility
-		height: 55, // Increased size for visibility
-		position: "absolute",
-		top: "1%", // Center it between header and content
-		left: "85%",
-		transform: "translate(-50%, -50%)", // Center horizontally and vertically
-		zIndex: 1, // Ensure it stays above both sections
+		width: 55,
+		height: 55,
 		border: "3px solid white", // To make the avatar stand out
+		transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out", // Transition on hover
+		"&:hover": {
+			transform: "scale(1.2)", // Slightly enlarge the avatar on hover
+			boxShadow: "0px 8px 15px rgba(0, 0, 0, 0.3)", // Add shadow on hover
+		},
 	},
 	content: {
-		padding: "20px 16px", // Increase padding to extend the white part
-		position: "relative",
-		height: "150px", // Adjust the height to make the middle white part longer
-		display: "flex",
-		flexDirection: "column",
-		justifyContent: "flex-end", // Pushes the content to the bottom
-		zIndex: 0, // Content stays below the avatar
+		padding: "20px 16px",
+		textAlign: "center", // Center content
 	},
 	divider: {
-		marginBottom: "8px", // Decrease space below the divider
+		margin: "24px 0", // Added more space below the divider
 	},
-	iconBox: {
+	enrollButton: {
+		backgroundColor: "#d9534f", // Red color for the button
+		color: "white",
+		padding: "12px 24px",
+		borderRadius: "4px",
+		textTransform: "none", // Ensure text isn't all caps
+		fontWeight: "600", // Make the text bold
+		fontSize: "16px",
+		"&:hover": {
+			backgroundColor: "#c9302c", // Darker red on hover
+		},
+	},
+	courseDescription: {
+		fontSize: "14px",
+		color: "#757575",
+		marginBottom: "16px",
+	},
+	details: {
+		fontSize: "14px",
+		color: "#757575",
 		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
 		gap: "8px",
-		justifyContent: "flex-end",
+	},
+	footer: {
+		borderTop: "1px solid #E0E0E0",
+		marginTop: "16px",
+		paddingTop: "16px",
+		display: "flex",
+		justifyContent: "space-between", // Space between the name and avatar
+		alignItems: "center",
+	},
+	instructorText: {
+		marginRight: "auto", // Align the instructor text to the left
+	},
+	"@keyframes fadeIn": {
+		"0%": {
+			opacity: 0,
+		},
+		"100%": {
+			opacity: 1,
+		},
 	},
 });
 
@@ -74,24 +103,26 @@ const ClassroomCard = ({ courseName, instructor, avatarLetter }) => {
 				"&:hover": {
 					transform: "scale(1.05)",
 					boxShadow:
-						"AQrgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px", // Custom box shadow on hover
+						"rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px", // Custom box shadow on hover
 				},
 			}}
 		>
+			{/* Header Section with course name */}
 			<Box className={classes.header}>
 				<Typography variant="h6">{courseName}</Typography>
 			</Box>
-
-			{/* Central Avatar */}
-			<Avatar className={classes.avatar}>{avatarLetter}</Avatar>
-
+			<Divider className={classes.divider} />
+			<br></br>
+			{/* Content Section */}
 			<CardContent className={classes.content}>
-				<Typography variant="body1" style={{ marginBottom: "auto" }}>
-					{instructor}
+				{/* Removed Intermediate */}
+				<Typography variant="body2" className={classes.details}>
+					3 Total Enrolled
 				</Typography>
 
-				{/* Divider line closer to icons */}
-				<Divider className={classes.divider} />
+				<Typography variant="body2" className={classes.details}>
+					April 1, 2021 Last Updated
+				</Typography>
 
 				{/* Icon Box */}
 				<Box className={classes.iconBox}>
@@ -105,6 +136,15 @@ const ClassroomCard = ({ courseName, instructor, avatarLetter }) => {
 							<FolderOpenOutlinedIcon />
 						</IconButton>
 					</Tooltip>
+				</Box>
+
+				{/* Footer */}
+				<Box className={classes.footer}>
+					<Typography variant="body2" className={classes.instructorText}>
+						A course by {instructor}
+					</Typography>
+					{/* Avatar moved to the right */}
+					<Avatar className={classes.avatar}>{avatarLetter}</Avatar>
 				</Box>
 			</CardContent>
 		</Card>
